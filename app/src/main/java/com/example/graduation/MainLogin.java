@@ -32,6 +32,8 @@ public class MainLogin extends AppCompatActivity implements View.OnClickListener
         super.onStart();
         if (authenticate() == true) {
             displayUserDetails();
+        }else{
+            startActivity(new Intent(MainLogin.this, Login.class));
         }
     }
 

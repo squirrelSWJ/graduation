@@ -1,5 +1,6 @@
 package com.example.graduation;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,11 +37,24 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 String password = etPassword.getText().toString();
                 int age = Integer.parseInt(etAge.getText().toString());
 
+                User user = new User(name, age, username, password);
 
-                User registeredData = new User(name, age, username, password);
-
-
+                registerUser(user);
                 break;
         }
+    }
+
+    private void registerUser(User user) {
+        ServerRequests serverRequests = new ServerRequests(this);
+        serverRequests.storeUserDataInBackground(user, new GetUserCallback() {
+            @Override
+            public void done(User returnedUser) {
+                startActivity(new Intent(Register.this, Login.class));
+            }
+        });
+
+
+
+
     }
 }
